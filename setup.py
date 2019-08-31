@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="beewi_smartclim",
-    version="0.0.5",
+    version="0.0.6",
     author="alemuro",
     author_email="hola@aleixmurtra.com",
     description="Library to read data from BeeWi SmartClim sensor using Bluetooth LE",

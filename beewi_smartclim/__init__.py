@@ -31,14 +31,35 @@ class BeewiSmartClimPoller:
 
     def get_temperature(self):
         """ Return temperature readed from the sensor. """
+        if (self._last_update is None) or (
+            datetime.now() - timedelta(minutes=3) > self._last_update
+        ):
+            self.update_data()
+        else:
+            _LOGGER.debug("Serving data from cache")
+        
         return self._temp
 
     def get_humidity(self):
         """ Return humidity readed from the sensor. """
+        if (self._last_update is None) or (
+            datetime.now() - timedelta(minutes=3) > self._last_update
+        ):
+            self.update_data()
+        else:
+            _LOGGER.debug("Serving data from cache")
+
         return self._humidity
 
     def get_battery(self):
         """ Return battery readed from the sensor. """
+        if (self._last_update is None) or (
+            datetime.now() - timedelta(minutes=3) > self._last_update
+        ):
+            self.update_data()
+        else:
+            _LOGGER.debug("Serving data from cache")
+            
         return self._battery
 
     def update_sensor(self):
@@ -48,7 +69,6 @@ class BeewiSmartClimPoller:
         This method reads the handle 0x003f that contains temperature, humidity
         and battery level.
         """
-
         bt_interface = BluetoothInterface(self._backend, "hci0")
 
         try:
