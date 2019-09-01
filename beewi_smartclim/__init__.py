@@ -34,7 +34,7 @@ class BeewiSmartClimPoller:
         if (self._last_update is None) or (
             datetime.now() - timedelta(minutes=3) > self._last_update
         ):
-            self.update_data()
+            self.update_sensor()
         else:
             _LOGGER.debug("Serving data from cache")
         
@@ -45,7 +45,7 @@ class BeewiSmartClimPoller:
         if (self._last_update is None) or (
             datetime.now() - timedelta(minutes=3) > self._last_update
         ):
-            self.update_data()
+            self.update_sensor()
         else:
             _LOGGER.debug("Serving data from cache")
 
@@ -56,7 +56,7 @@ class BeewiSmartClimPoller:
         if (self._last_update is None) or (
             datetime.now() - timedelta(minutes=3) > self._last_update
         ):
-            self.update_data()
+            self.update_sensor()
         else:
             _LOGGER.debug("Serving data from cache")
             
