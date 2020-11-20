@@ -1,10 +1,11 @@
-""" Beewi Smartclim Poller used by Home Assistant """ 
+""" Beewi Smartclim Poller used by Home Assistant """
 
 from datetime import datetime, timedelta
 import logging
 from btlewrap.base import BluetoothInterface, BluetoothBackendException
 
 _LOGGER = logging.getLogger(__name__)
+
 
 class BeewiSmartClimPoller:
     """This class will interact with the sensor and aggregates all data."""
@@ -27,7 +28,8 @@ class BeewiSmartClimPoller:
         self._battery = None
         self._last_update = None
 
-        _LOGGER.debug("MiTempBtSensorPoller initiated with backend %s", self._backend)
+        _LOGGER.debug(
+            "MiTempBtSensorPoller initiated with backend %s", self._backend)
 
     def get_temperature(self):
         """ Return temperature readed from the sensor. """
@@ -37,7 +39,7 @@ class BeewiSmartClimPoller:
             self.update_sensor()
         else:
             _LOGGER.debug("Serving data from cache")
-        
+
         return self._temp
 
     def get_humidity(self):
@@ -59,7 +61,7 @@ class BeewiSmartClimPoller:
             self.update_sensor()
         else:
             _LOGGER.debug("Serving data from cache")
-            
+
         return self._battery
 
     def update_sensor(self):
@@ -69,11 +71,14 @@ class BeewiSmartClimPoller:
         This method reads the handle 0x003f that contains temperature, humidity
         and battery level.
         """
-        bt_interface = BluetoothInterface(self._backend, "hci0")
+        # bt_interface = BluetoothInterface(self._backend, "hci0")
+        bt_interface = BluetoothInterface(
+            backend=self._backend, adapter="hci0")
 
         try:
             with bt_interface.connect(self._mac) as connection:
-                raw = connection.read_handle(0x003F)  # pylint: disable=no-member
+                raw = connection.read_handle(
+                    0x003F)  # pylint: disable=no-member
 
             if not raw:
                 raise BluetoothBackendException("Could not read 0x003f handle")
@@ -92,8 +97,11 @@ class BeewiSmartClimPoller:
             self._battery = battery
             self._last_update = datetime.now()
 
-            _LOGGER.debug("%s: Find temperature with value: %s", self._mac, self._temp)
-            _LOGGER.debug("%s: Find humidity with value: %s", self._mac, self._humidity)
-            _LOGGER.debug("%s: Find battery with value: %s", self._mac, self._battery)
+            _LOGGER.debug("%s: Find temperature with value: %s",
+                          self._mac, self._temp)
+            _LOGGER.debug("%s: Find humidity with value: %s",
+                          self._mac, self._humidity)
+            _LOGGER.debug("%s: Find battery with value: %s",
+                          self._mac, self._battery)
         except BluetoothBackendException:
             return
