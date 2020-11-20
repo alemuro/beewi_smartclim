@@ -1,3 +1,5 @@
+![.github/workflows/main.yaml](https://github.com/alemuro/beewi_smartclim/workflows/.github/workflows/main.yaml/badge.svg?branch=master)
+
 # beewi_smartclim - Library for BeeWi SmartClim Bluetooth LE sensor
 
 
