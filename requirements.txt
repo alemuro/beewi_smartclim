@@ -1,2 +1,2 @@
-btlewrap>=0.0.8
+btlewrap>=0.1.1
 bluepy
